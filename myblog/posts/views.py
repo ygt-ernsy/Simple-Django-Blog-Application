@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+import requests
 
 # Create your views here.
 class IndexView(LoginRequiredMixin,generic.ListView):
@@ -24,7 +24,27 @@ class DetailView(LoginRequiredMixin,generic.DetailView):
         return Post.objects.filter(updated_at__lte=timezone.now())
 
 def home(request):
-    return render(request,"posts/home.html")
+    quote = ""
+    author = ""
+
+    try:
+        response = requests.get("https://zenquotes.io/api/random")
+        
+        data = response.json()
+
+        quote = data[0]['q']
+        author = data[0]['a']
+
+    except requests.RequestException:
+        quote = "The greatest glory in living lies not in never falling, but in rising every time we fall."
+        author = "Nelson Mandela"
+
+
+    context = {
+        'quote' : quote,
+        'author' : author,
+    }
+    return render(request,"posts/home.html",context)
 
 def login_page(request):
     if request.method == "POST":

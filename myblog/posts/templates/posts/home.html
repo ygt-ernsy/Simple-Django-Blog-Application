@@ -6,10 +6,17 @@
     <div class="home-container">
         <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
         <p>You have successfully logged in.</p>
+
+        <!-- The error must be in this block -->
+        <div class="quote-container" style="margin-top: 30px; padding: 20px; border-left: 4px solid #ccc; font-style: italic;">
+            <!-- Check these two lines for typos -->
+            <p>"{{ quote }}"</p>
+            <p><strong>- {{ author }}</strong></p>
+        </div>
+        <!-- End of block -->
+
         <div class="home-actions">
-            <!-- Also changed this to use the url tag for best practice -->
             <a href="{% url 'posts:index' %}" class="button">Go to Blog</a>
         </div>
     </div>
 {% endblock %}
-
