@@ -1,0 +1,16 @@
+<h1>{{ post.title }}</h1>
+
+<p>
+    <em>Published on: {{ post.created_at|date:"F j, Y" }}</em>
+</p>
+
+<hr>
+
+<div>
+    {{ post.content|linebreaks }}
+</div>
+
+<br>
+<hr>
+
+<a href="{% url 'posts:index' %}">Back to all posts</a>
