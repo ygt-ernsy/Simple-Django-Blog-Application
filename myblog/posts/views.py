@@ -1,6 +1,7 @@
 
 from django.shortcuts import render, redirect
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -8,14 +9,14 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin,generic.ListView):
     template_name = "posts/index.html"
     context_object_name = "latest_post_list"
 
     def get_queryset(self):
         return Post.objects.filter(updated_at__lte=timezone.now()).order_by("-updated_at")[:5]
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin,generic.DetailView):
     model = Post
     template_name = "posts/detail.html"
 

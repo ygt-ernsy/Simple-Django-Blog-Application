@@ -7,9 +7,9 @@
         <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
         <p>You have successfully logged in.</p>
         <div class="home-actions">
-            <a href="/posts" class="button">Go to Blog</a>
-            <!-- You will need to add a logout URL to your urls.py -->
-            <a href="/logout/" class="button-secondary">Log Out</a>
+            <!-- Also changed this to use the url tag for best practice -->
+            <a href="{% url 'posts:index' %}" class="button">Go to Blog</a>
         </div>
     </div>
 {% endblock %}
+
